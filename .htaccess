@@ -1,0 +1,15 @@
+RewriteEngine On
+
+# Ensure we handle the root folder correctly
+RewriteRule ^$ public/ [L]
+
+# Remove .php extension from the URL
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([^/]+)$ public/$1.php [L]
+
+# Serve everything from the public folder, except existing files and directories
+RewriteCond %{REQUEST_URI} !^/public/
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ public/$1 [L]
